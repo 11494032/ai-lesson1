@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>极简记账</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部导航栏 -->
+        <header class="navbar">
+            <h1>极简记账</h1>
+            <div class="nav-buttons">
+                <button id="week-btn" class="nav-btn active">本周</button>
+                <button id="month-btn" class="nav-btn">本月</button>
+                <button id="settings-btn" class="nav-btn">设置</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- 左侧：记账输入区 -->
+            <div class="input-section">
+                <h2>添加记录</h2>
+                <form id="expense-form">
+                    <div class="form-group">
+                        <label for="amount">金额</label>
+                        <input type="number" id="amount" placeholder="请输入金额" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">类别</label>
+                        <select id="category" required>
+                            <option value="">请选择类别</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">备注</label>
+                        <input type="text" id="description" placeholder="请输入备注（可选）">
+                    </div>
+                    <div class="form-group">
+                        <label for="date">日期</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <button type="submit" class="add-btn">添加记录</button>
+                </form>
+            </div>
+
+            <!-- 中间：记录列表区 -->
+            <div class="records-section">
+                <h2>消费记录</h2>
+                <div id="records-list">
+                    <!-- 记录将通过JavaScript动态添加 -->
+                </div>
+            </div>
+
+            <!-- 右侧：数据统计与图表区 -->
+            <div class="stats-section">
+                <div class="overview-cards">
+                    <div class="card">
+                        <h3>总支出</h3>
+                        <p id="total-expense">¥0.00</p>
+                    </div>
+                    <div class="card">
+                        <h3>日均支出</h3>
+                        <p id="daily-average">¥0.00</p>
+                    </div>
+                </div>
+
+                <div class="chart-section">
+                    <div class="chart-tabs">
+                        <button id="pie-chart-btn" class="chart-btn active">分类占比</button>
+                        <button id="line-chart-btn" class="chart-btn">支出趋势</button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 设置模态框 -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>设置</h2>
+            <div class="category-management">
+                <h3>类别管理</h3>
+                <div class="category-list" id="category-list">
+                    <!-- 类别将通过JavaScript动态添加 -->
+                </div>
+                <div class="add-category">
+                    <input type="text" id="new-category" placeholder="输入新类别">
+                    <button id="add-category-btn">添加类别</button>
+                </div>
+            </div>
+            <div class="export-section">
+                <h3>数据导出</h3>
+                <button id="export-btn">导出CSV</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑模态框 -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>编辑记录</h2>
+            <form id="edit-form">
+                <input type="hidden" id="edit-id">
+                <div class="form-group">
+                    <label for="edit-amount">金额</label>
+                    <input type="number" id="edit-amount" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-category">类别</label>
+                    <select id="edit-category" required>
+                        <option value="">请选择类别</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-description">备注</label>
+                    <input type="text" id="edit-description">
+                </div>
+                <div class="form-group">
+                    <label for="edit-date">日期</label>
+                    <input type="date" id="edit-date" required>
+                </div>
+                <button type="submit" class="save-btn">保存</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
